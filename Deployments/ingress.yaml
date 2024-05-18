@@ -1,0 +1,23 @@
+apiVersion : networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: laptop-web
+spec:
+  rules:
+  - host: www.laptop.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: laptop-service 
+            port:
+              number: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: laptop-webservice
+            port:
+              number: 80

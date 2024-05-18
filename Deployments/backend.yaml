@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laptop-deployment
+  labels:
+    app: laptop
+spec:
+  selector:
+    matchLabels:
+      app: laptop
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: laptop
+    spec:
+      containers:
+      - name: hello
+        image: laptop:latest
+        imagePullPolicy: Never
+        ports:
+        - name: http
+          containerPort: 3000 
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: laptop-service
+spec:
+  selector:
+    app: laptop
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 3000 		
+    targetPort: 3000
